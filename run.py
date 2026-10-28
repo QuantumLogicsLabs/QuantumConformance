@@ -9,7 +9,11 @@ Layout (one folder per language):
     conformance/<lang>/<name>.exit             its exit status, when not 0
     conformance/<lang>/invalid/<name>.<ext>    a program the real compiler rejects
 
-    lang: c (.c), cpp (.cpp), java (.java)
+    lang: c (.c), cpp (.cpp), java (.java), mixed (.sa)
+
+`mixed` holds Quantum programs that mix Python, JavaScript, C++ and Java
+syntax in one .sa file. No other toolchain runs them, so their .expected
+files are written by hand, they run without --strict, and --regen skips them.
 
 A valid program passes when `qrun --strict` compiles it and prints exactly the
 expected output (and exits with the expected status); an invalid one passes
@@ -26,7 +30,7 @@ usage:
 import argparse, difflib, os, shutil, subprocess, sys, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-EXT = {"c": ".c", "cpp": ".cpp", "java": ".java"}
+EXT = {"c": ".c", "cpp": ".cpp", "java": ".java", "mixed": ".sa"}
 TIMEOUT = 20
 
 
@@ -57,6 +61,14 @@ def java_tool(name):
     return shutil.which(name)
 
 
+def java_version(javac):
+    """The JDK's feature release (11, 17, 21, ...), from `javac -version`."""
+    import re
+    r = subprocess.run([javac, "-version"], capture_output=True)
+    m = re.search(r"javac (\d+)", (r.stdout + r.stderr).decode("utf-8", "replace"))
+    return int(m.group(1)) if m else 0
+
+
 def java_main_name(source):
     import re
     m = re.search(r"\bpublic\s+(?:final\s+|abstract\s+)*(?:class|interface|enum|record)\s+(\w+)", source)
@@ -84,12 +96,13 @@ def reference(lang, src, stdin_text):
         with open(target, "w", encoding="utf-8", newline="") as f:
             f.write(source)
         # Preview features on: JDK 21 has Java 25's compact source files
-        # (top-level `void main()`) only as a preview.
-        r = subprocess.run([javac, "-encoding", "UTF-8", "--enable-preview", "--release", "21", "-d", tmp, target],
-                           capture_output=True)
+        # (top-level `void main()`) only as a preview. An older JDK compiles
+        # at its own level (programs using newer features are then rejected).
+        preview = ["--enable-preview", "--release", "21"] if java_version(javac) >= 21 else []
+        r = subprocess.run([javac, "-encoding", "UTF-8"] + preview + ["-d", tmp, target], capture_output=True)
         if r.returncode != 0:
             return False, None, norm(r.stderr.decode("utf-8", "replace"))
-        code, out, _ = run([java, "--enable-preview", "-Dfile.encoding=UTF-8", "-Dstdout.encoding=UTF-8", "-cp", tmp,
+        code, out, _ = run([java] + preview[:1] + ["-Dfile.encoding=UTF-8", "-Dstdout.encoding=UTF-8", "-cp", tmp,
                             name], stdin_text, cwd=tmp)
         return True, code, out
 
@@ -129,6 +142,8 @@ def expected_exit(src):
 
 def regen(langs, pattern):
     for lang in langs:
+        if lang == "mixed":
+            continue  # hand-written expectations
         valid, invalid = programs(lang, pattern)
         for src in valid:
             ok, code, out = reference(lang, src, stdin_for(src))
@@ -163,7 +178,8 @@ def check(langs, pattern, qrun, verbose):
                 print("SKIP (no .expected)", name)
                 continue
             want, want_code = read(exp_file).replace("\r\n", "\n"), expected_exit(src)
-            code, out, err = run([qrun, "--strict", os.path.basename(src)], stdin_for(src), cwd=os.path.dirname(src))
+            flags = [] if lang == "mixed" else ["--strict"]
+            code, out, err = run([qrun] + flags + [os.path.basename(src)], stdin_for(src), cwd=os.path.dirname(src))
             if code == want_code and out == want:
                 continue
             failed += 1

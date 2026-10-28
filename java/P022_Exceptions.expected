@@ -1,0 +1,12 @@
+caught: short by 30.0 / 30.0
+IllegalArgumentException: bad amount: -5.0
+parsed 42
+parsed 4x2
+42 -1
+AIOOBE: Index 2 out of bounds for length 2
+NPE
+CCE
+java.lang.ArithmeticException: / by zero
+inner finally
+outer <- inner
+balance 70.0

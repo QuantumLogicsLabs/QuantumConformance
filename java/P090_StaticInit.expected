@@ -1,0 +1,8 @@
+{kb=1024, mb=1048576, gb=1073741824} [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+4096 3221225472 12
+immutable
+before lazy, counter=0
+7
+Lazy loaded
+lazy-value counter=1
+2 [init#2, ctor] 3 [init#3, ctor, extra]

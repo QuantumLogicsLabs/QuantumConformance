@@ -1,0 +1,12 @@
+! IllegalStateException: task 2 is already done
+! NoSuchElementException: task 9
+{TODO=[write parser, update docs, release], DOING=[add tests], DONE=[fix lexer bug]}
+#2 fix lexer bug [DONE, p5]
+#4 add tests [DOING, p4]
+#1 write parser [TODO, p3]
+#5 release [TODO, p2]
+#3 update docs [TODO, p1]
+{bug=1, compiler=2, docs=1, java=2, tests=1}
+10
+add 1; add 2; add 3; add 4; add 5; move 2 DOING; move 2 DONE; move 4 DOING
+next up: write parser

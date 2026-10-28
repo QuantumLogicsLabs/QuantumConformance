@@ -1,0 +1,10 @@
+A x B =
+   10    5    4
+   22   11   13
+transpose(A x B) =
+   10   22
+    5   11
+    4   13
+B x I == B: true
+row sums [19,46], column sums [32,16,17]
+trace(B^2) = 16

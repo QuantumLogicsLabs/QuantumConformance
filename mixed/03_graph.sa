@@ -1,0 +1,96 @@
+# Mixed-syntax program 3: shortest paths on a small road map.
+# C++ builds the graph, Java runs BFS and Dijkstra, Python formats routes,
+# JavaScript summarises.
+import java.util.*;
+
+// C++: the graph as an adjacency list of edges
+class Edge {
+public:
+    int to;
+    int weight;
+    Edge(int t, int w) { to = t; weight = w; }
+};
+
+vector<vector<Edge>> buildGraph(int n) {
+    vector<vector<Edge>> g;
+    for (int i = 0; i < n; i++) {
+        vector<Edge> roads;
+        g.push_back(roads);
+    }
+    return g;
+}
+
+void addRoad(vector<vector<Edge>> &g, int a, int b, int w) {
+    g[a].push_back(Edge(b, w));
+    g[b].push_back(Edge(a, w));
+}
+
+# Python: the map
+cities = ["Ash", "Birch", "Cedar", "Dogwood", "Elm", "Fir"]
+graph = buildGraph(len(cities))
+for (a, b, w) in [(0, 1, 7), (0, 2, 9), (0, 5, 14), (1, 2, 10), (1, 3, 15), (2, 3, 11), (2, 5, 2), (3, 4, 6), (4, 5, 9)]:
+    addRoad(graph, a, b, w)
+
+def route(prev, target):
+    path = []
+    node = target
+    while node != -1:
+        path.insert(0, cities[node])
+        node = prev[node]
+    return " -> ".join(path)
+
+// Java: the algorithms
+public class Routes {
+    static int[] hops(List<List<Edge>> g, int start) {
+        int[] dist = new int[g.size()];
+        Arrays.fill(dist, -1);
+        Deque<Integer> queue = new ArrayDeque<>();
+        queue.offer(start);
+        dist[start] = 0;
+        while (!queue.isEmpty()) {
+            int u = queue.poll();
+            for (Edge e : g.get(u)) {
+                if (dist[e.to] == -1) {
+                    dist[e.to] = dist[u] + 1;
+                    queue.offer(e.to);
+                }
+            }
+        }
+        return dist;
+    }
+
+    static int[][] dijkstra(List<List<Edge>> g, int start) {
+        int n = g.size();
+        int[] dist = new int[n];
+        int[] prev = new int[n];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        Arrays.fill(prev, -1);
+        dist[start] = 0;
+        PriorityQueue<int[]> pq = new PriorityQueue<>((x, y) -> x[0] - y[0]);
+        pq.add(new int[]{0, start});
+        while (!pq.isEmpty()) {
+            int[] top = pq.poll();
+            int u = top[1];
+            if (top[0] > dist[u]) continue;
+            for (Edge e : g.get(u)) {
+                if (dist[u] + e.weight < dist[e.to]) {
+                    dist[e.to] = dist[u] + e.weight;
+                    prev[e.to] = u;
+                    pq.add(new int[]{dist[e.to], e.to});
+                }
+            }
+        }
+        return new int[][]{dist, prev};
+    }
+}
+
+hopCounts = Routes.hops(graph, 0)
+result = Routes.dijkstra(graph, 0)
+dist = result[0]
+prev = result[1]
+for i in range(len(cities)):
+    print(f"{cities[i]}: {hopCounts[i]} hops, {dist[i]} km via {route(prev, i)}")
+
+// JavaScript: the farthest city
+const far = dist.reduce((best, d, i) => d > dist[best] ? i : best, 0);
+console.log(`farthest from ${cities[0]}: ${cities[far]} (${dist[far]} km)`);

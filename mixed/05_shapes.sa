@@ -1,0 +1,85 @@
+# Mixed-syntax program 5: one polymorphic list of shapes written in four styles.
+# A Java interface and abstract class, a C++ class, a Python class and a
+# JavaScript class all answer area() and name().
+import java.util.*;
+
+interface Shape {
+    double area();
+    String name();
+    default String describe() { return String.format("%-9s area %7.2f", name(), area()); }
+}
+
+// Java
+abstract class Polygon implements Shape {
+    protected final int sides;
+    Polygon(int sides) { this.sides = sides; }
+    public String name() { return sides + "-gon"; }
+}
+
+class Square extends Polygon {
+    private final double side;
+    Square(double side) { super(4); this.side = side; }
+    public double area() { return side * side; }
+    @Override public String name() { return "square"; }
+}
+
+class Triangle extends Polygon {
+    private final double base, height;
+    Triangle(double base, double height) { super(3); this.base = base; this.height = height; }
+    public double area() { return base * height / 2; }
+}
+
+// C++
+class Circle {
+public:
+    double r;
+    Circle(double radius) { r = radius; }
+    double area() { return 3.14159265 * r * r; }
+    string name() { return "circle"; }
+};
+
+# Python
+class Ellipse:
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+    def area(self):
+        return 3.14159265 * self.a * self.b
+    def name(self):
+        return "ellipse"
+
+// JavaScript
+class Trapezoid {
+    constructor(a, b, h) { this.a = a; this.b = b; this.h = h; }
+    area() { return (this.a + this.b) * this.h / 2; }
+    name() { return "trapezoid"; }
+}
+
+let shapes = [new Square(3), new Triangle(4, 5), new Circle(1.5), Ellipse(2, 1), new Trapezoid(2, 4, 3)];
+
+# Python: the biggest, and which style each one came from
+biggest = shapes[0]
+for s in shapes:
+    if s.area() > biggest.area():
+        biggest = s
+print("biggest:", biggest.name())
+
+// JavaScript: names sorted by area
+const byArea = shapes.slice().sort((x, y) => x.area() - y.area()).map(s => s.name());
+console.log(byArea.join(" < "));
+
+// Java: the entry point (a Java main runs after the file's other top-level code)
+public class Shapes {
+    public static void main(String[] args) {
+        double total = 0;
+        for (Object s : shapes) {
+            if (s instanceof Shape) {
+                System.out.println("java    " + ((Shape) s).describe());
+            } else {
+                System.out.println(String.format("other   %-9s area %7.2f", s.name(), s.area()));
+            }
+            total += s.area();
+        }
+        System.out.printf("total area %.3f%n", total);
+    }
+}

@@ -1,0 +1,4 @@
+sum=36 min=1 | sum=24 min=3 | sum=1 min=1
+sum=40 min=-3 | sum=16 min=-3 | sum=21 min=4
+5 7 15 21 24 31 32 36
+121

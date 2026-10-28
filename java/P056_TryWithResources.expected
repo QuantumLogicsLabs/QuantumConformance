@@ -1,0 +1,24 @@
+open A
+open B
+use A
+use B
+close B
+close A
+--
+open C
+use C
+close C
+caught use failed: C
+--
+open D
+use D
+close D
+caught use failed: D suppressed=1 close failed: D
+--
+open E
+use E
+close E
+caught close failed: E
+outer finally
+finally sees x=2
+1

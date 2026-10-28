@@ -1,0 +1,70 @@
+# Mixed-syntax program 6: matrices.
+# C++ multiplies, Java transposes and prints, Python builds and checks,
+# JavaScript computes row and column sums.
+
+// C++: multiplication on vectors of rows
+vector<vector<int>> multiply(vector<vector<int>> a, vector<vector<int>> b) {
+    int n = a.size();
+    int m = b[0].size();
+    int k = b.size();
+    vector<vector<int>> c;
+    for (int i = 0; i < n; i++) {
+        vector<int> row;
+        for (int j = 0; j < m; j++) {
+            int s = 0;
+            for (int t = 0; t < k; t++) s += a[i][t] * b[t][j];
+            row.push_back(s);
+        }
+        c.push_back(row);
+    }
+    return c;
+}
+
+// Java: transpose and formatting
+public class Matrices {
+    public static int[][] transpose(int[][] m) {
+        int[][] t = new int[m[0].length][m.length];
+        for (int i = 0; i < m.length; i++)
+            for (int j = 0; j < m[0].length; j++)
+                t[j][i] = m[i][j];
+        return t;
+    }
+
+    public static String show(int[][] m) {
+        StringBuilder sb = new StringBuilder();
+        for (int[] row : m) {
+            for (int v : row) sb.append(String.format("%5d", v));
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
+    public static int[][] identity(int n) {
+        int[][] id = new int[n][n];
+        for (int i = 0; i < n; i++) id[i][i] = 1;
+        return id;
+    }
+}
+
+# Python: the inputs
+a = [[i * 3 + j + 1 for j in range(3)] for i in range(2)]
+b = [[1, 0, 2], [0, 1, 1], [3, 1, 0]]
+product = multiply(a, b)
+print("A x B =")
+print(Matrices.show(product), end="")
+print("transpose(A x B) =")
+print(Matrices.show(Matrices.transpose(product)), end="")
+
+same = multiply(b, Matrices.identity(3)) == b
+print("B x I == B:", same)
+
+// JavaScript: sums
+const rowSums = product.map(r => r.reduce((s, v) => s + v, 0));
+const colSums = product[0].map((_, j) => product.reduce((s, r) => s + r[j], 0));
+console.log(`row sums ${JSON.stringify(rowSums)}, column sums ${JSON.stringify(colSums)}`);
+
+// C++: the trace of B x B
+vector<vector<int>> b2 = multiply(b, b);
+int trace = 0;
+for (int i = 0; i < 3; i++) trace += b2[i][i];
+cout << "trace(B^2) = " << trace << endl;

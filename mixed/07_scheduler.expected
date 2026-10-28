@@ -1,0 +1,8 @@
+[t=0] deploy (URGENT)
+[t=3] hotfix (URGENT)
+[t=5] email (NORMAL)
+[t=6] report (NORMAL)
+[t=8] backup (LOW)
+[t=12] cleanup (LOW)
+finished at t=13, time per priority {LOW=5, NORMAL=3, URGENT=5}
+urgent work done first

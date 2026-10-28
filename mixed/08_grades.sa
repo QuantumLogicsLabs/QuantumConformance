@@ -1,0 +1,63 @@
+# Mixed-syntax program 8: a grade book.
+# Python holds the raw scores in dicts, Java streams compute statistics,
+# JavaScript ranks, C++ assigns letter grades.
+import java.util.*;
+import java.util.stream.*;
+
+scores = {
+    "ada": [92, 88, 95],
+    "brian": [71, 64, 80],
+    "chen": [85, 91, 78],
+    "dana": [55, 62, 70],
+    "eve": [99, 97, 100]
+}
+
+// C++: letter grades
+char letter(double avg) {
+    if (avg >= 90) return 'A';
+    if (avg >= 80) return 'B';
+    if (avg >= 70) return 'C';
+    if (avg >= 60) return 'D';
+    return 'F';
+}
+
+// Java: statistics with streams
+public class GradeBook {
+    public static double average(List<Integer> marks) {
+        return marks.stream().mapToInt(Integer::intValue).average().orElse(0);
+    }
+
+    public static int best(List<Integer> marks) {
+        return marks.stream().max(Integer::compare).get();
+    }
+
+    public static Map<Character, List<String>> byLetter(Map<String, Double> averages) {
+        Map<Character, List<String>> out = new TreeMap<>();
+        for (String name : averages.keySet()) {
+            out.computeIfAbsent(letter(averages.get(name)), k -> new ArrayList<>()).add(name);
+        }
+        return out;
+    }
+}
+
+# Python: averages per student
+averages = {}
+for name in sorted(scores.keys()):
+    averages[name] = GradeBook.average(scores[name])
+
+Map<String, Double> table = new TreeMap<>();
+for (String n : averages.keys()) table.put(n, averages[n]);
+
+// JavaScript: ranking
+const ranking = Object.keys(averages).sort((a, b) => averages[b] - averages[a]);
+ranking.forEach((name, i) => {
+    console.log(`${i + 1}. ${name.padEnd(6)} ${averages[name].toFixed(2)} best=${GradeBook.best(scores[name])} grade=${letter(averages[name])}`);
+});
+
+System.out.println("by letter: " + GradeBook.byLetter(table));
+double classAverage = averages.values().stream().mapToDouble(d -> d).average().getAsDouble();
+System.out.printf("class average %.2f%n", classAverage);
+
+# Python: who improved from first to last test
+improved = [n for n in sorted(scores.keys()) if scores[n][-1] > scores[n][0]]
+print("improved:", ", ".join(improved))

@@ -1,0 +1,62 @@
+# Mixed-syntax program 7: a task scheduler.
+# A Java enum and PriorityQueue order the work, JavaScript callbacks run
+# it, Python generates the tasks, C++ keeps the clock.
+import java.util.*;
+
+enum Priority {
+    LOW(1), NORMAL(5), URGENT(10);
+
+    private final int weight;
+    Priority(int weight) { this.weight = weight; }
+    public int getWeight() { return weight; }
+}
+
+class Task {
+    final String name;
+    final Priority priority;
+    final int cost;
+    Task(String name, Priority priority, int cost) {
+        this.name = name;
+        this.priority = priority;
+        this.cost = cost;
+    }
+}
+
+// C++: the clock
+class Clock {
+public:
+    int now = 0;
+    void advance(int t) { now += t; }
+};
+
+Clock clock;
+
+# Python: the tasks
+specs = [("backup", "LOW", 4), ("deploy", "URGENT", 3), ("email", "NORMAL", 1),
+         ("report", "NORMAL", 2), ("hotfix", "URGENT", 2), ("cleanup", "LOW", 1)]
+tasks = [new Task(s[0], Priority.valueOf(s[1]), s[2]) for s in specs]
+
+// JavaScript: what happens when a task runs
+const log = [];
+const onRun = (task, start) => log.push(`[t=${start}] ${task.name} (${task.priority})`);
+
+public class Scheduler {
+    public static void main(String[] args) {
+        PriorityQueue<Task> queue = new PriorityQueue<>(
+            Comparator.comparingInt((Task t) -> -t.priority.getWeight()).thenComparing(t -> t.name));
+        for (Task t : tasks) queue.add(t);
+        Map<Priority, Integer> spent = new EnumMap<>(Priority.class);
+        while (!queue.isEmpty()) {
+            Task t = queue.poll();
+            onRun(t, clock.now);
+            clock.advance(t.cost);
+            spent.merge(t.priority, t.cost, Integer::sum);
+        }
+        for (String line : log) System.out.println(line);
+        System.out.println("finished at t=" + clock.now + ", time per priority " + spent);
+        switch (Priority.valueOf("URGENT")) {
+            case URGENT: System.out.println("urgent work done first"); break;
+            default: System.out.println("?");
+        }
+    }
+}

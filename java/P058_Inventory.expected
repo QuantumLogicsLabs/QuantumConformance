@@ -1,0 +1,15 @@
+SKU  Name     Category       Qty      Value
+E1   Laptop   ELECTRONICS      5    4999.95
+E2   Phone    ELECTRONICS     12    7194.00
+G1   Apples   GROCERY        200      90.00
+G2   Bread    GROCERY         30      89.70
+T1   Puzzle   TOYS             0       0.00
+T2   Kite     TOYS             7     155.75
+ELECTRONICS: 12193.95
+GROCERY: 179.70
+TOYS: 155.75
+out of stock: [Puzzle]
+priciest: Laptop
+total inventory: 12,529.40
+{ELECTRONICS=2, GROCERY=2, TOYS=2}
+E1:6, E2:13, G1:201, G2:31, T2:8

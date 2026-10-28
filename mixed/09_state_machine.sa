@@ -1,0 +1,71 @@
+# Mixed-syntax program 9: a vending machine state machine.
+# A Java enum names the states, a JavaScript object holds the transition
+# table, Python drives the events, C++ keeps the coin box.
+import java.util.*;
+
+enum State { IDLE, HAS_COIN, VENDING, OUT_OF_STOCK }
+
+// JavaScript: transitions, state name -> event -> next state name
+const transitions = {
+    "IDLE": { "coin": "HAS_COIN" },
+    "HAS_COIN": { "push": "VENDING", "refund": "IDLE" },
+    "VENDING": { "done": "IDLE", "empty": "OUT_OF_STOCK" },
+    "OUT_OF_STOCK": { "restock": "IDLE" }
+};
+
+// C++: the coin box
+class CoinBox {
+public:
+    int coins = 0;
+    int refunds = 0;
+    void insert() { coins++; }
+    void refund() { coins--; refunds++; }
+};
+
+CoinBox box;
+
+// Java: the machine
+public class Machine {
+    private State state = State.IDLE;
+    private int stock;
+    private final List<String> trace = new ArrayList<>();
+
+    public Machine(int stock) { this.stock = stock; }
+
+    public boolean fire(String event) {
+        Map<String, String> row = transitions[state.name()];
+        if (!row.containsKey(event)) {
+            trace.add(state + " ignores " + event);
+            return false;
+        }
+        State next = State.valueOf(row[event]);
+        switch (next) {
+            case HAS_COIN: box.insert(); break;
+            case IDLE:
+                if (state == State.HAS_COIN) box.refund();
+                break;
+            case VENDING: stock--; break;
+            default: break;
+        }
+        trace.add(state + " --" + event + "--> " + next);
+        state = next;
+        return true;
+    }
+
+    public State getState() { return state; }
+    public int getStock() { return stock; }
+    public List<String> getTrace() { return trace; }
+}
+
+# Python: a day of events
+m = new Machine(2)
+events = ["push", "coin", "push", "done", "coin", "refund", "coin", "push", "empty", "coin", "restock"]
+accepted = 0
+for e in events:
+    if m.fire(e):
+        accepted += 1
+
+for line in m.getTrace():
+    print(line)
+print(f"accepted {accepted} of {len(events)} events; state {m.getState()}, stock {m.getStock()}")
+cout << "coins kept: " << box.coins << ", refunds: " << box.refunds << endl;
