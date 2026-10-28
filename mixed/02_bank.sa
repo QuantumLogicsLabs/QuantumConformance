@@ -1,0 +1,83 @@
+# Mixed-syntax program 2: a bank ledger.
+# Java accounts and checked exceptions, a C++ transaction log, Python
+# bookkeeping, JavaScript reporting.
+import java.util.*;
+
+class InsufficientFundsException extends Exception {
+    private final int missing;
+    public InsufficientFundsException(String owner, int missing) {
+        super(owner + " is short by " + missing);
+        this.missing = missing;
+    }
+    public int getMissing() { return missing; }
+}
+
+class Account {
+    private final String owner;
+    private int balance;
+
+    Account(String owner, int balance) {
+        this.owner = owner;
+        this.balance = balance;
+    }
+
+    String getOwner() { return owner; }
+    int getBalance() { return balance; }
+
+    void deposit(int amount) {
+        if (amount <= 0) throw new IllegalArgumentException("deposit must be positive: " + amount);
+        balance += amount;
+    }
+
+    void withdraw(int amount) throws InsufficientFundsException {
+        if (amount > balance) throw new InsufficientFundsException(owner, amount - balance);
+        balance -= amount;
+    }
+}
+
+// C++: an append-only log
+class Ledger {
+public:
+    int entries = 0;
+    vector<string> lines;
+    void record(string what) {
+        entries++;
+        lines.push_back(to_string(entries) + ". " + what);
+    }
+};
+
+Ledger ledger;
+
+# Python: apply a batch of operations, catching what goes wrong
+def apply(accounts, ops):
+    for (kind, who, amount) in ops:
+        acc = accounts[who]
+        try {
+            if kind == "deposit":
+                acc.deposit(amount)
+            else:
+                acc.withdraw(amount)
+            ledger.record(f"{kind} {amount} -> {who}")
+        } catch (InsufficientFundsException e) {
+            ledger.record("refused: " + e.getMessage())
+        } catch (IllegalArgumentException e) {
+            ledger.record("invalid: " + e.getMessage())
+        }
+
+accounts = {"ann": new Account("ann", 100), "bob": new Account("bob", 20)}
+apply(accounts, [("deposit", "ann", 50), ("withdraw", "bob", 35), ("deposit", "bob", -5), ("withdraw", "ann", 120)])
+
+// JavaScript: print the log and balances
+ledger.lines.forEach(line => console.log(line));
+const owners = Object.keys(accounts).sort();
+for (const o of owners) {
+    console.log(`${o}: ${accounts[o].getBalance()}`);
+}
+
+public class Bank {
+    public static void main(String[] args) {
+        int total = 0;
+        for (String name : new String[]{"ann", "bob"}) total += accounts[name].getBalance();
+        System.out.println("entries=" + ledger.entries + " total=" + total);
+    }
+}

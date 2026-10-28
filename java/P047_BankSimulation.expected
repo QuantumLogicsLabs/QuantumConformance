@@ -1,0 +1,10 @@
+DEPOSIT ok
+TRANSFER ok
+WITHDRAW failed: bob has only $35.50
+TRANSFER failed: no account dave
+WITHDRAW failed: carol has only $999.89
+DEPOSIT ok
+alice: $1,235,067.90
+bob: $35.50
+carol: $999.89
+total $1,236,103.29, failures 3

@@ -1,0 +1,7 @@
+1. deposit 50 -> ann
+2. refused: bob is short by 15
+3. invalid: deposit must be positive: -5
+4. withdraw 120 -> ann
+ann: 30
+bob: 20
+entries=4 total=50

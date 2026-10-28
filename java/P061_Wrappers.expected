@@ -1,0 +1,13 @@
+true false true
+false true true
+1000
+unboxing null
+5.0 2 1000.0
+true y
+false true true
+7 4 -1
+2 65 32767 -128
+Integer Long Double Float Character String Boolean null 
+{a=2}
+10 31 1
+4.9E-324 3.4028235E38 Infinity

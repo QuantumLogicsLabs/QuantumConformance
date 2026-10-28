@@ -1,0 +1,6 @@
+100 Grace   Mgr(3)       12800.00
+101 Alan    Salaried      8000.00
+102 Linus   Hourly        7565.00
+103 Ada     Hourly        6600.00
+payroll 34965.00
+Grace(S) Alan(S) Linus(H) Ada(H)

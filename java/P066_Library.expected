@@ -1,0 +1,9 @@
+denied: Alien already borrowed by ida
+no such title: Nope
+#1 Book 'Dune' (28 days) -> sam
+#2 Book 'Hobbit' (21 days)
+#3 Dvd 'Alien' (7 days) -> ida
+#4 Magazine 'Byte' (3 days) -> ida
+ida has 2 item(s), longest loan 7 days
+sam has 1 item(s), longest loan 28 days
+available now: 2 true

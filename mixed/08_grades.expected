@@ -1,0 +1,8 @@
+1. eve    98.67 best=100 grade=A
+2. ada    91.67 best=95 grade=A
+3. chen   84.67 best=91 grade=B
+4. brian  71.67 best=80 grade=C
+5. dana   62.33 best=70 grade=D
+by letter: {A=[ada, eve], B=[chen], C=[brian], D=[dana]}
+class average 81.80
+improved: ada, brian, dana, eve

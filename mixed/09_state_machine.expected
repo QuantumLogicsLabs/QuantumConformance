@@ -1,0 +1,13 @@
+IDLE ignores push
+IDLE --coin--> HAS_COIN
+HAS_COIN --push--> VENDING
+VENDING --done--> IDLE
+IDLE --coin--> HAS_COIN
+HAS_COIN --refund--> IDLE
+IDLE --coin--> HAS_COIN
+HAS_COIN --push--> VENDING
+VENDING --empty--> OUT_OF_STOCK
+OUT_OF_STOCK ignores coin
+OUT_OF_STOCK --restock--> IDLE
+accepted 9 of 11 events; state IDLE, stock 0
+coins kept: 2, refunds: 1

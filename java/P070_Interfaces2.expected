@@ -1,0 +1,7 @@
+circle(1.0) -> 3.142
+square(2.0) -> 4.000
+circle(0.5) -> 0.785
+walk+swim
+'' false false
+'abc' true false
+'abcdef' false true

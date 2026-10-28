@@ -1,0 +1,7 @@
+acc=3628800
+a=21
+steps=111
+{a=21, acc=3628800, b=0, c=0, e=0, n=0, r=0, steps=111, t=21, x=1}
+IllegalStateException: undefined variable zz
+IllegalArgumentException: bad instruction: frob
+IllegalStateException: too many steps

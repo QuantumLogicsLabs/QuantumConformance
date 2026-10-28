@@ -1,0 +1,9 @@
+name   T1  T2  T3      avg grade
+alice  92  88  95    91.67 A
+cara   85  91  78    84.67 B
+bob    71  64  80    71.67 C
+dev    55  62  70    62.33 D
+T1: min 55 max 92 mean 75.8
+T2: min 62 max 91 mean 76.3
+T3: min 70 max 95 mean 80.8
+top student: alice (note: )

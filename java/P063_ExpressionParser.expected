@@ -1,0 +1,8 @@
+(1 + (2 * 3)) = 7.0
+((1 + 2) * 3) = 9.0
+(2 ^ (3 ^ 2)) = 512.0
+((x * x) - (4 * y)) = 7.0
+((0 - x) + (10 / 4)) = -0.5
+z + 1 -> NoSuchElementException: unbound z
+3 + * 4 -> IllegalArgumentException: unexpected '*' at 2
+((1.5 * (2 + x)) / y) = 15.0

@@ -1,0 +1,10 @@
+MERCURY 3.70
+EARTH 9.80
+JUPITER 24.81
+6 + 7 = 13
+6 * 7 = 42
+MEDIUM 1 MEDIUM -1
+medium
+true
+{LOW=1, HIGH=3}
+no such level

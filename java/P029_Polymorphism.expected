@@ -1,0 +1,16 @@
+B A.call->B
+A.name B.name
+A.kind B.kind
+A.over(String)
+B.over(Object)
+B.over(Object)
+describe A
+describe B
+int
+int
+int
+long
+double
+Integer
+Object 5
+Object q

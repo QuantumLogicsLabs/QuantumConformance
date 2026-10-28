@@ -1,0 +1,10 @@
+[1, 3, 5, 9] 4
+true false true
+[apple, fig, kiwi, pear]
+apple pear
+fig fig pear
+[apple, fig] [kiwi, pear]
+[pear, kiwi, fig, apple]
+[a, b, c, d, e] [c, d] [a, b]
+[p, r, o, g, a, m, i, n]
+[8, 6, 4, 1] 8 [6, 4, 1]

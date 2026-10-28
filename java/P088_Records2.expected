@@ -1,0 +1,7 @@
+USD 19.99 + USD 5.50 = USD 25.49
+USD 59.97 USD 3.00 EUR 107.50
+[USD 3.34, USD 3.33, USD 3.33]
+currency mismatch: USD vs EUR
+true 1 true
+[USD -3.25, USD 0.01, USD 5.50, USD 19.99]
+total USD 22.25

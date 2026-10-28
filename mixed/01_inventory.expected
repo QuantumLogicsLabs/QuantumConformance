@@ -1,0 +1,7 @@
+in stock: WIDGET, GADGET, GIZMO
+widget: 12 units, worth 30
+gadget: 3 units, worth 59.97
+gizmo: 40 units, worth 30
+sorted: [doohickey x0, gadget x3, gizmo x40, widget x12]
+cheapest: gizmo at 0.75
+total value: 119.97

@@ -1,0 +1,4 @@
+IDLE -push-> IDLE -coin-> READY -coin-> READY -push-> VENDING -refund-> VENDING -done-> IDLE -coin-> READY -refund-> IDLE
+{IDLE=3, READY=3, VENDING=2}
+abc=true _x1=true 9lives=false =false ok_name2=true bad-name=false 
+[IDLE, READY, VENDING] 1

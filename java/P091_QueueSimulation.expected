@@ -1,0 +1,16 @@
+c1  arr= 3 teller=0 start= 3 wait=0
+c2  arr= 4 teller=1 start= 4 wait=0
+c3  arr= 6 teller=0 start= 7 wait=1
+c4  arr= 8 teller=0 start= 9 wait=1
+c5  arr=10 teller=1 start=10 wait=0
+c6  arr=13 teller=0 start=13 wait=0
+c7  arr=15 teller=1 start=15 wait=0
+c8  arr=19 teller=1 start=19 wait=0
+c9  arr=20 teller=0 start=20 wait=0
+c10 arr=24 teller=1 start=24 wait=0
+c11 arr=28 teller=0 start=28 wait=0
+c12 arr=29 teller=1 start=29 wait=0
+c13 arr=33 teller=0 start=33 wait=0
+c14 arr=35 teller=1 start=35 wait=0
+c15 arr=37 teller=0 start=37 wait=0
+avg wait 0.13, max wait 1 (customer 3), served [8, 7], done at 39

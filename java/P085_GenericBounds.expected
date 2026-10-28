@@ -1,0 +1,6 @@
+[Sq1, Circ1, Sq3, Circ2] max=Circ2
+9 kiwi
+[0, 1, 2, 3] [start, 0, 1]
+bo null
+####
+{false=[1, 2, 4, 5, 7], true=[3, 6]}

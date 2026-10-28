@@ -1,0 +1,13 @@
+'42' -> Optional[42] true 42 84
+' 7 ' -> Optional[7] true 7 14
+'x1' -> Optional.empty false -1 0
+'' -> Optional.empty false -1 0
+x.org ?
+false
+hi quantum
+7
+generated
+nothing here
+NSEE No value present
+default true false
+null dflt 0

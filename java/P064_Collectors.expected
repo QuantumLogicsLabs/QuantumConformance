@@ -1,0 +1,13 @@
+{eng=121666.66666666667, ops=70000.0, sales=70000.0}
+{eng=[Ann, Bob, Fay], ops=[Cid, Eve], sales=[Dee]}
+eng:Fay ops:Cid sales:Dee 
+n=6 min=60000 max=150000 avg=95833.33 sum=575000
+sales
+{false=[Cid, Dee, Fay], true=[Ann, Bob, Eve]}
+eng|ops|sales
+[eng, ops, sales]
+220
+{eng=365000.0, ops=140000.0, sales=70000.0}
+[1, 4, 9, 16, 25, 36]
+[3, 6, 9, 12, 15, 18]
+{1=1, 2=2, 3=1}

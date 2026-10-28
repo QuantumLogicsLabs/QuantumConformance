@@ -1,0 +1,31 @@
+> look
+Hall: A dusty hall. Exits [east, north]
+> go north
+You enter the Library.
+> go down
+The vault is locked.
+> take map
+Taken: map
+> go south
+You enter the Hall.
+> go east
+You enter the Garden.
+> look
+Garden: Overgrown and quiet. Exits [west] Items [key, rose]
+> take key
+Taken: key
+> take sword
+No such item.
+> inv
+You carry key, map.
+> go west
+You enter the Hall.
+> go north
+You enter the Library.
+> go down
+You enter the Vault.
+> look
+Vault: Gold glitters everywhere! Exits [up]
+> dance
+Unknown command 'dance'.
+Moves: 6, treasure found: true

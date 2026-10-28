@@ -1,0 +1,8 @@
+t=4 floor=4 dir=UP pending=[5, 7]
+t=9 floor=5 dir=DOWN pending=[0, 2, 9]
+t=14 floor=0 dir=DOWN pending=[9]
+t=19 floor=5 dir=UP pending=[9]
+t=24 floor=9 dir=IDLE pending=[]
+t=29 floor=9 dir=IDLE pending=[]
+[stop@1(DOWN), stop@5(UP), stop@7(UP), stop@2(DOWN), stop@0(DOWN), stop@9(UP)]
+travelled 24 floors

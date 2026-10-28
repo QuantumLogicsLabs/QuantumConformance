@@ -1,0 +1,8 @@
+biggest: 3-gon
+ellipse < circle < square < trapezoid < 3-gon
+java    square    area    9.00
+java    3-gon     area   10.00
+other   circle    area    7.07
+other   ellipse   area    6.28
+other   trapezoid area    9.00
+total area 41.352

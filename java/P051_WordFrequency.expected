@@ -1,0 +1,9 @@
+it        6 ******
+of        6 ******
+the       6 ******
+was       6 ******
+age       2 **
+distinct: 13
+{2=[it, of], 3=[age, the, was], 4=[best], 5=[epoch, times, worst], 6=[belief, wisdom], 11=[foolishness, incredulity]}
+longest: foolishness
+e=17 t=17 s=14

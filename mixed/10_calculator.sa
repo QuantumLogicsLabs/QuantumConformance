@@ -1,0 +1,96 @@
+# Mixed-syntax program 10: a small expression calculator.
+# Python tokenizes, Java parses into a tree (recursive descent), JavaScript
+# evaluates with a table of operators, C++ prints the results.
+import java.util.*;
+
+# Python: the tokenizer
+def tokenize(src):
+    tokens = []
+    i = 0
+    while i < len(src):
+        c = src[i]
+        if c == " ":
+            i += 1
+        elif c.isdigit():
+            j = i
+            while j < len(src) and src[j].isdigit():
+                j += 1
+            tokens.append(src[i:j])
+            i = j
+        else:
+            tokens.append(c)
+            i += 1
+    return tokens
+
+// Java: the tree and the parser
+class Node {
+    final String op;
+    final Node left, right;
+    final int value;
+    Node(int value) { this.op = null; this.left = null; this.right = null; this.value = value; }
+    Node(String op, Node left, Node right) { this.op = op; this.left = left; this.right = right; this.value = 0; }
+    public String toString() { return op == null ? String.valueOf(value) : "(" + left + " " + op + " " + right + ")"; }
+}
+
+public class Parser {
+    private final List<String> tokens;
+    private int pos = 0;
+
+    public Parser(List<String> tokens) { this.tokens = tokens; }
+
+    private String peek() { return pos < tokens.size() ? tokens.get(pos) : ""; }
+
+    private String next() { return tokens.get(pos++); }
+
+    public Node expression() {
+        Node n = term();
+        while (peek().equals("+") || peek().equals("-")) {
+            String op = next();
+            n = new Node(op, n, term());
+        }
+        return n;
+    }
+
+    private Node term() {
+        Node n = factor();
+        while (peek().equals("*") || peek().equals("/") || peek().equals("%")) {
+            String op = next();
+            n = new Node(op, n, factor());
+        }
+        return n;
+    }
+
+    private Node factor() {
+        String t = next();
+        if (t.equals("(")) {
+            Node inner = expression();
+            next();
+            return inner;
+        }
+        if (t.equals("-")) return new Node("-", new Node(0), factor());
+        return new Node(Integer.parseInt(t));
+    }
+}
+
+// JavaScript: evaluation by an operator table
+const ops = {
+    "+": (a, b) => a + b,
+    "-": (a, b) => a - b,
+    "*": (a, b) => a * b,
+    "/": (a, b) => Math.floor(a / b),
+    "%": (a, b) => a % b
+};
+function evaluate(node) {
+    if (node.op == null) return node.value;
+    return ops[node.op](evaluate(node.left), evaluate(node.right));
+}
+
+// C++: run the inputs
+void run(string src) {
+    Node tree = new Parser(tokenize(src)).expression();
+    cout << src << "  =>  " << tree.toString() << "  =  " << evaluate(tree) << endl;
+}
+
+for (auto src : {"1 + 2 * 3", "(1 + 2) * 3", "100 / 7 % 4", "-(4 - 10) * 2", "2 * (3 + 4) * (5 - 1)"}) {
+    run(src);
+}

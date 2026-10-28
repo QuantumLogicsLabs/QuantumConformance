@@ -1,0 +1,7 @@
+Ash: 0 hops, 0 km via Ash
+Birch: 1 hops, 7 km via Ash -> Birch
+Cedar: 1 hops, 9 km via Ash -> Cedar
+Dogwood: 2 hops, 20 km via Ash -> Cedar -> Dogwood
+Elm: 2 hops, 20 km via Ash -> Cedar -> Fir -> Elm
+Fir: 1 hops, 11 km via Ash -> Cedar -> Fir
+farthest from Ash: Dogwood (20 km)

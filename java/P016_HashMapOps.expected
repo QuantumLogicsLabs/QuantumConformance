@@ -1,0 +1,16 @@
+26 null
+-1
+true true
+3
+{alice=31, bob=52, dave=40, eve=3}
+alice=31
+bob=52
+dave=40
+eve=3
+{0=sq0, 16=sq4, 1=sq1, 4=sq2, 9=sq3}
+[0, 16, 1, 4, 9]
+[sq0, sq4, sq1, sq2, sq3]
+{i=4, m=1, p=2, s=4}
+{even=[2, 4], odd=[1]}
+{z=1, a=2, m=3}
+z1 a2 m3 
