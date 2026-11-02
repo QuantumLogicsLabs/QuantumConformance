@@ -1,0 +1,23 @@
+4 books
+------------------------
+1. Dune (1965)
+2. Emma (1815)
+3. Ubik (1969)
+4. Kim (1901)
+oldest 1815, newest 1969
+1456 pages
+middle: ["Emma", "Ubik"]
+letters ["D", "u", "n", "e"]
+------------------------
+lent Dune to ann
+lent Emma to bob
+refused: Dune is already out
+lent Ubik to ann
+desk holds 3 loans
+[ann:Dune] 14 days
+[bob:Emma] 14 days
+[ann:Ubik] 21 days
+{ann=35, bob=14}
+shelf 12, first code 66
+Ubik > Kim > Emma > Dune
+longest 474 pages, 4 books

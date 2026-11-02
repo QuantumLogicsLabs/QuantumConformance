@@ -11,8 +11,8 @@ Layout (one folder per language):
 
     lang: c (.c), cpp (.cpp), java (.java), mixed (.sa)
 
-`mixed` holds Quantum programs that mix Python, JavaScript, C++ and Java
-syntax in one .sa file. No other toolchain runs them, so their .expected
+`mixed` holds Quantum programs that mix Python, JavaScript, Ruby, C++ and
+Java syntax in one .sa file. No other toolchain runs them, so their .expected
 files are written by hand, they run without --strict, and --regen skips them.
 
 A valid program passes when `qrun --strict` compiles it and prints exactly the

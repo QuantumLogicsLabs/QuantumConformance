@@ -1,0 +1,140 @@
+# Mixed-syntax program 11: a lending library.
+# Ruby keeps the catalogue (classes, a module, blocks, ranges), Java runs the
+# loan desk (an interface, a HashMap, checked exceptions, streams), and each
+# side calls the other. Each part keeps its own language's meanings: Ruby's
+# "-" * 24, chars and reduce next to Java's c - '0', chars() and max().
+
+# Ruby: the catalogue
+module Describable
+  def label
+    "#{title} (#{year})"
+  end
+end
+
+class Item
+  attr_reader :title, :year
+  def initialize(title, year)
+    @title = title
+    @year = year
+  end
+end
+
+class Book < Item
+  include Describable
+  attr_reader :pages
+  def initialize(title, year, pages)
+    @title = title
+    @year = year
+    @pages = pages
+  end
+  private
+  def shelf_mark
+    "#{title}!"
+  end
+end
+
+catalogue = [Book.new("Dune", 1965, 412), Book.new("Emma", 1815, 474), Book.new("Ubik", 1969, 202), Book.new("Kim", 1901, 368)]
+count = catalogue.length
+puts "#{count} books"
+puts "-" * 24
+catalogue.each_with_index do |b, i|
+  puts "#{i + 1}. #{b.label()}"
+end
+
+years = catalogue.map { |b| b.year }
+puts "oldest #{years.min}, newest #{years.max}"
+pages = catalogue.map { |b| b.pages }
+total = pages.reduce { |a, b| a + b }
+puts "#{total} pages"
+lo = 1
+hi = 3
+middle = (lo...hi).map { |i| catalogue[i].title }
+puts "middle: #{middle}"
+letters = "Dune".chars
+puts "letters #{letters}"
+puts "-" * 24
+
+# Java: the loan desk
+import java.util.*;
+
+interface Lendable {
+    String id();
+    default String tag() { return "[" + id() + "]"; }
+}
+
+class LoanException extends Exception {
+    LoanException(String message) { super(message); }
+}
+
+class Loan implements Lendable {
+    private final String title;
+    private final String member;
+    private int days;
+
+    Loan(String title, String member, int days) {
+        this.title = title;
+        this.member = member;
+        this.days = days;
+    }
+
+    public String id() { return member + ":" + title; }
+    String getMember() { return member; }
+    int getDays() { return days; }
+    void extend(int more) { days += more; }
+}
+
+class Desk {
+    private final Map<String, Loan> loans = new LinkedHashMap<>();
+    // the same name as the Ruby part's `count`: inside Desk it is the field
+    private int count = 0;
+
+    void lend(String title, String member, int days) throws LoanException {
+        if (loans.containsKey(title)) throw new LoanException(title + " is already out");
+        loans.put(title, new Loan(title, member, days));
+        count++;
+    }
+
+    int getCount() { return count; }
+    Collection<Loan> all() { return loans.values(); }
+
+    Map<String, Integer> daysByMember() {
+        Map<String, Integer> out = new TreeMap<>();
+        for (Loan l : loans.values()) out.merge(l.getMember(), l.getDays(), Integer::sum);
+        return out;
+    }
+}
+
+# Ruby: lend through the Java desk
+desk = Desk.new
+[["Dune", "ann", 14], ["Emma", "bob", 7], ["Dune", "cy", 7], ["Ubik", "ann", 21]].each do |t, m, d|
+  begin
+    desk.lend(t, m, d)
+    puts "lent #{t} to #{m}"
+  rescue => e
+    puts "refused: #{e.getMessage()}"
+  end
+end
+
+// Java: the report (a Java main runs after the file's other top-level code)
+public class Library {
+    public static void main(String[] args) {
+        System.out.println("desk holds " + desk.getCount() + " loans");
+        for (Loan l : desk.all()) {
+            if (l.getDays() < 10) l.extend(7);
+            System.out.println(l.tag() + " " + l.getDays() + " days");
+        }
+        System.out.println(desk.daysByMember());
+
+        String shelfCode = "B12";
+        int number = 0;
+        for (char c : shelfCode.toCharArray())
+            if (Character.isDigit(c)) number = number * 10 + (c - '0');
+        System.out.println("shelf " + number + ", first code " + shelfCode.chars().findFirst().getAsInt());
+        List<String> titles = new ArrayList<>();
+        for (Object b : catalogue) titles.add(((Book) b).title);
+        Collections.sort(titles, Comparator.reverseOrder());
+        System.out.println(String.join(" > ", titles));
+        int longest = catalogue.stream().mapToInt(b -> b.pages).max().getAsInt();
+        System.out.printf("longest %d pages, %d books%n", longest, count);
+    }
+}
